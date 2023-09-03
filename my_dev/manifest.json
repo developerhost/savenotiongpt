@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Notion Saver",
+  "version": "1.0",
+  "description": "Save article title and URL to Notion",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "images/icon-48.png"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "index.js"
+      ]
+    }
+  ],
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+
+  "permissions": [
+    "activeTab",
+    "*://api.notion.com/*",
+    "storage"
+  ]
+}
