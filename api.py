@@ -21,8 +21,7 @@ blog_text = trafilatura.extract(downloaded)
 # 抽出されたテキストを表示（オプション）
 if blog_text:
     
-    # print(blog_text)
-    
+    # 要約用のプロンプト    
     summary_prompt =f"""
     #Order
     Please summarize the following blog post.
@@ -37,7 +36,7 @@ if blog_text:
     #text
     {blog_text}
     """
-    
+    # 要約用のChatGPTAPI処理
     summary_llm = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-16k",
         messages=[
@@ -46,9 +45,10 @@ if blog_text:
         temperature=0.2
     )
     
+    # 要約用結果の出力
     print(summary_llm["choices"][0]["message"]["content"])
     
-    
+    # タグ付けのプロンプト
     tag_prompt=f"""
     #Order
     From the text below, come up with a unique and appropriate tag that succinctly describes its content in one word and generate one tag.
@@ -63,6 +63,8 @@ if blog_text:
     #text
     {summary_llm["choices"][0]["message"]["content"]}
     """
+    
+    # タグ付けのChatGPTAPI処理
     tag_llm = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-16k",
         messages=[
@@ -71,6 +73,7 @@ if blog_text:
         temperature=0.2
     )
     
+    # タグ付けの出力
     print(tag_llm["choices"][0]["message"]["content"])
     
 else:
